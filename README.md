@@ -1,4 +1,4 @@
-python-mit-courseware-cs101
+Coursework for mit-courseware-6.00
 ===========================
 
 
