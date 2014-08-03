@@ -1,4 +1,4 @@
-Coursework for mit-courseware-6.00
+Code & Solutions for mit-courseware classes
 ===========================
 
 
