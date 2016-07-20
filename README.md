@@ -14,7 +14,7 @@ So currently our solution is finding and hand selecting designers from specific 
 This fine for now but far from an efficient means of continuing this course as we seek to become a powerful tool for users to search and find designers.
 
 
-### Proposed Solution:
+### Proposed Enhanced Solution:
 We need to make finding these designers as efficient as possible, limit redundancy (meaning not include names we already have in our database) and increase the amount of data we can share with our users, and make it useful for them to find these emerging and independent designers easier.
 
 Above all break this fragmentation within the market and become the defacto resource of independent/emerging designers around the world. 
@@ -24,19 +24,23 @@ The curation part then comes when we add additional information about the design
 
 **Here is the a proposed list of algorithm steps:**
 
-1. Give the algorithm different resources by letting it interacting with a "Resource API" that has a collection of urls. (format --> JSON) **Should the "Resource API" be an exact clone of the Brand API in terms of information fields?**
+1. Give the `Crawling Program` the `Resource API` to request the resources. The call of resources will be returned in json format.
 
-2. Begin to scrap the sites to analyze and retrieve appropriate data. 
+2. Start to crawl each site and retrieve the names of designers. 
 
-3. The algorithm when analyzing results will check the "Resource API" and if the name don't match, save them to the "Resource Api" if the name already exist do not add the name. **Do we get any other type of information from these resources? Should we relate each name with associated information related to the names in an effort to create tags for each name?**
+3. The algorithm after scrapping each site will create a `json file`. Within the file a object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value)`. 
 
-4. The Algorithm will use the names within our "Resource API" and query the web (a search engine e.g. "Google" or something else???) to find the specific information correlated to the name that is begin queried to match fields within the "Resource API". **Is this possible? If not..Do we still continue to hand curate O(n) designers once we have the names? In terms of the web, we are talking in the thousands if not millions of designers. Is this what must be done?**
+4. If the json file already exist, it will check to see if the names begin scrapped already exist within the `list_of_names`. If the name exist it will not add it to the list, if the name does not exist it adds the new name to the list. If a file does not exist already, skip step 4.
 
-5. Once the "Resource API" has had the new information from all the urls at this point it would merge with our current DB adding new information and not adding things that are similar. After the merge the "Resource API" would index the data for next time. In an effort to make the process faster. **Is this even possible?, If so is this efficient**
+5. Call the `Brand API` to compare the names to the `json file` to check what names are already existing within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
+
+#### This part is still hypothetical
+
+6. The `Crawl Program` will then call our `Brand API` to use the `brand_names` and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This data mining aspect, where we can later use the information to study trends and gather new information on our labels
 
 **After thoughts..**
 
-We will still at the end of the day will have some quality control on what brands are displayed on the app to our user. **The question undoubtedly is we should ask ourselves is How do we automate the process and make it as efficient as possible?** 
+We will still at the end of the day will have quality control on what brands are displayed on the app to our user. 
 
 ### Programming Language 
 + Python
