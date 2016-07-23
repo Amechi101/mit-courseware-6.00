@@ -32,7 +32,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/amechiegbe/Desktop/unlabel-algorithm"
+set -gx VIRTUAL_ENV "/Users/amechiegbe/Desktop/cm_dev/unlabel-algorithm/unlabel-algorithm-env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
