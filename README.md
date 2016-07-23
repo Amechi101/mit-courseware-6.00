@@ -24,9 +24,7 @@ The curation part then comes when we add additional information about the design
 
 **Here is the a proposed list of algorithm steps:**
 
-1. Create a file `resource_name.py` within the src/sites directory and within the file create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource, call the class and add arguments within the call.
-
-2. ```python
+```python
 #ResourceName( url, name, *args, **kwargs ).createJson()
 
 # url = url of resource to scrap from
@@ -51,16 +49,18 @@ class Garmentory( ScrapBase ):
 Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"brand"}, 'a'], id=["brands-list"] ).createJson()
 ```
 
-3. To scrap an individual site run `python resource_name.py` in the terminal within the `src/sites` directory. To scrap all sites within the directory run the command `sh sites.sh` in the terminal. Either command will start the program to scrap each site and retrieve the names of designers. 
+1. Create a file `resource_name.py` within the src/sites directory and within the file create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource, call the class and add arguments within the call.
+
+2. To scrap an individual site run `python resource_name.py` in the terminal within the `src/sites` directory. To scrap all sites within the directory run the command `sh sites.sh` in the terminal. Either command will start the program to scrap each site and retrieve the names of designers. 
 
 
-4. The algorithm after scrapping the site will create a `json file` and add it within the `src/sites/output_data` directory. Within the file an object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value), resource_name (key) ==> name_of_resource used (value)`. 
+3. The algorithm after scrapping the site will create a `json file` and add it within the `src/sites/output_data` directory. Within the file an object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value), resource_name (key) ==> name_of_resource used (value)`. 
 
-5. Scan all of `output_data` folder and get all the information from the `resource_names.json` files and create a new `object` with a `list_of_all_resources_names `, `list_of_all_designer_names` and a `total_count_of_all_designers` within the `list_of_all_designer_names`. When getting `list_of_all_designer_names` run check to see if the names are duplicate before adding to `list_of_all_designer_names` If the name does exist it will not add to the list, if the name does not exist it will add the new name to the list. Create a new `all_designers.json` file.
+4. Scan all of `output_data` folder and get all the information from the `resource_names.json` files and create a new `object` with a `list_of_all_resources_names `, `list_of_all_designer_names` and a `total_count_of_all_designers` within the `list_of_all_designer_names`. When getting `list_of_all_designer_names` run check to see if the names are duplicate before adding to `list_of_all_designer_names` If the name does exist it will not add to the list, if the name does not exist it will add the new name to the list. Create a new `all_designers.json` file.
 
-6. Call the `Brand API` to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
+5. Call the `Brand API` to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
 
-7. **Note: This part is still hypothetical and needs to be discussed** The `Crawl Program` will then call our `Brand API` to use the `brand_names` and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This data mining aspect, where we can later use the information to study trends and gather new information on our labels
+6. **Note: This part is still hypothetical and needs to be discussed** The `Crawl Program` will then call our `Brand API` to use the `brand_names` and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This data mining aspect, where we can later use the information to study trends and gather new information on our labels
 
 **After thoughts..**
 
