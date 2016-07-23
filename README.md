@@ -60,7 +60,7 @@ Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"bra
 
 5. Call the `Brand API` to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
 
-6. **Note: This part is still hypothetical and needs to be discussed** The `Crawl Program` will then call our `Brand API` to use the `brand_names` and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This data mining aspect, where we can later use the information to study trends and gather new information on our labels
+6. **Note: This part is still hypothetical and needs to be discussed** The we will then add a `Crawl Program` in addition to our Scrap Program and then call our `Brand API` to use the `brand_names` key and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This is the data mining aspect, where we can later use the information to study trends and gather new information on our labels, or even been to automate some of the or curation with the stored information.
 
 **After thoughts..**
 
