@@ -58,7 +58,7 @@ Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"bra
 
 4. Scan all of `output_data` folder and get all the information from the `resource_names.json` files and create a new `object` with a `list_of_all_resources_names `, `list_of_all_designer_names` and a `total_count_of_all_designers` within the `list_of_all_designer_names`. When getting `list_of_all_designer_names` run check to see if the names are duplicate before adding to `list_of_all_designer_names` If the name does exist it will not add to the list, if the name does not exist it will add the new name to the list. Create a new `all_designers.json` file.
 
-5. Call the `[Brand API](https://github.com/Amechi101/unlabelapp)` to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
+5. Call the [Brand API](https://github.com/Amechi101/unlabelapp) to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
 
 6. **Note: This part is still hypothetical and needs to be discussed** The we will then add a `Crawl Program` in addition to our Scrap Program and then call our `Brand API` to use the `brand_names` key and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This is the data mining aspect, where we can later use the information to study trends and gather new information on our labels, or even been to automate some of the or curation with the stored information.
 
@@ -66,7 +66,7 @@ Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"bra
 
 We will still at the end of the day will have quality control on what brands are displayed on the app to our user. 
 
-To look or add resources to scrap from look on the `Admin`: `https://unlabel.us/unlabel-network/admin/applications/crawlresource/` or `Resource API`: `https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/`
+To add or look at resources to scrap check the: [Admin](https://unlabel.us/unlabel-network/admin/applications/crawlresource/) to look at resources to scrap: [Resource API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/)
 
 
 ### Programming Language 
