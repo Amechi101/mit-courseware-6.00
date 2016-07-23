@@ -1,4 +1,4 @@
-# Unlabel Algorithm v1
+# Unlabel Scrap & Crawl Algorithm v1.0.0
 
 ### Problem:
 So right now our competitors all do something similar to us they try and incorporate and have a resource of emerging designers. Some are more broad in the designers they curate, others are more specific in their curation, but the general notation is their and all seem to be in the same vertical.
