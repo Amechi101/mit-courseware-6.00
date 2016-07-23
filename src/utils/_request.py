@@ -54,7 +54,7 @@ class HTTPConnection( object ):
 		
 		except ConnectionError:
 
-			time.sleep(1)
+			time.sleep(15)
 			
 			soup = BeautifulSoup( str( self.getHttp( url ) ), 'lxml' )
 			
