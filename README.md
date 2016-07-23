@@ -26,6 +26,31 @@ The curation part then comes when we add additional information about the design
 
 1. Create a file `resource_name.py` within the src/sites directory and within the file create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource, call the class and add arguments within the call.
 
+```python
+#ResourceName( url, name, *args, **kwargs ).createJson()
+
+# url = url of resource to scrap from
+# name = name of resource begin scrapped
+# *args = list of elements to scrap
+# **kwargs = name of css `class` or `id` the *args will be filtered against (choose a **kwargs before looking for *args to filter)
+
+
+#Example:
+from core.base import ScrapBase
+
+class Garmentory( ScrapBase ):
+    """
+    In case you need to override or add any methods you can just do so within the newly Class,
+    as it inherits from the ScrapBase Class
+    
+    Remove the pass statement 
+    	...to add or alter any method below.
+    """
+	pass
+	
+Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"brand"}, 'a'], id=["brands-list"] ).createJson()
+```
+
 2. To scrap an individual site run `python resource_name.py` in the terminal within the `src/sites` directory. To scrap all sites within the directory run the command `sh sites.sh` in the terminal. Either command will start the program to scrap each site and retrieve the names of designers. 
 
 
