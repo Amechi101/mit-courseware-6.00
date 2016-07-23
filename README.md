@@ -26,7 +26,7 @@ The curation part then comes when we add additional information about the design
 
 1. Create a file `resource_name.py` within the src/sites directory and within the file create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource, call the class and add arguments within the call.
 
-2.To scrap an individual site run `python resource_name.py` in the terminal within the `src/sites` directory. To scrap all sites within the directory run the command `sh sites.sh` in the terminal. Either command will start the program to scrap each site and retrieve the names of designers. 
+2. To scrap an individual site run `python resource_name.py` in the terminal within the `src/sites` directory. To scrap all sites within the directory run the command `sh sites.sh` in the terminal. Either command will start the program to scrap each site and retrieve the names of designers. 
 
 
 3. The algorithm after scrapping the site will create a `json file` and add it within the `src/sites/output_data` directory. Within the file an object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value), resource_name (key) ==> name_of_resource used (value)`. 
