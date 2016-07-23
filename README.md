@@ -24,16 +24,39 @@ The curation part then comes when we add additional information about the design
 
 **Here is the a proposed list of algorithm steps:**
 
-1. Give the `Crawling Program` the `Resource API` to request the resources. The call of resources will be returned in json format.
+1. Create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource and begin to add in arguments to scrap the site.
+
+```python
+ResourceName( url, name, *args, **kwargs ).createJson()
+
+url = url of resource to scrap from
+name = name of resource begin scrapped
+*args = list of elements to scrap
+**kwargs = name of css `class` or `id` the *args will be filtered against (choose a **kwargs before looking for *args to filter)
+
+Example:
+from core.base import ScrapBase
+
+class Garmentory( ScrapBase ):
+    """
+    In case you need to override or add any methods you can just do so within the newly Class,
+    as it inherits from the ScrapBase Class
+    
+    Remove the pass statement 
+    	...to add or alter any method below.
+    """
+	pass
+	
+Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"brand"}, 'a'], id=["brands-list"] ).createJson()
+```
 
 2. Start to crawl each site and retrieve the names of designers. 
 
-3. The algorithm after scrapping each site will create a `json file`. Within the file a object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value)`. 
+3. The algorithm after scrapping each site will create a `json file`. Within the file a object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value), resource_name (key) ==> name_of_resource used (value)`. 
 
-4. If the json file already exist, it will check to see if the names begin scrapped already exist within the `list_of_names`. If the name exist it will not add it to the list, if the name does not exist it adds the new name to the list. If a file does not exist already, skip step 4.
+4. Scan all of `output_data` folder and get all the information from the `resource_names.json` files and create a new `object` with a `list_of_all_resources_names `, `list_of_all_designer_names` and a `total_count_of_all_designers` within the `list_of_all_designer_names`. When getting `list_of_all_designer_names` run check to see if the names are duplicate before adding to `list_of_all_designer_names` If the name does exist it will not add to the list, if the name does not exist it will add the new name to the list. Create a new `all_designers.json` file.
 
-5. Call the `Brand API` to compare the names to the `json file` to check what names are already existing within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
-
+5. Call the `Brand API` to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
 
 6. **Note: This part is still hypothetical and needs to be discussed** The `Crawl Program` will then call our `Brand API` to use the `brand_names` and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This data mining aspect, where we can later use the information to study trends and gather new information on our labels
 
