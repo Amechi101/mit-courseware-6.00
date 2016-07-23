@@ -24,15 +24,15 @@ The curation part then comes when we add additional information about the design
 
 **Here is the a proposed list of algorithm steps:**
 
-1. Create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource and begin to add in arguments to scrap the site.
+1. Create a file `resource_name.py` within the src/sites directory and within the file create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource, call the class and add arguments within the call.
 
 ```python
 #ResourceName( url, name, *args, **kwargs ).createJson()
 
-#url = url of resource to scrap from
-#name = name of resource begin scrapped
-#*args = list of elements to scrap
-#**kwargs = name of css `class` or `id` the *args will be filtered against (choose a **kwargs before looking for *args to filter)
+# url = url of resource to scrap from
+# name = name of resource begin scrapped
+# *args = list of elements to scrap
+# **kwargs = name of css `class` or `id` the *args will be filtered against (choose a **kwargs before looking for *args to filter)
 
 
 #Example:
