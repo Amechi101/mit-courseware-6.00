@@ -60,11 +60,13 @@ Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"bra
 
 5. Call the [Brand API](https://github.com/Amechi101/unlabelapp) to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
 
-6. **Note: This part is still hypothetical and needs to be discussed** The we will then add a `Crawl Program` in addition to our Scrap Program and then call our `Brand API` to use the `brand_names` key and crawl the  web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our `brand_names` or something else?? This is the data mining aspect, where we can later use the information to study trends and gather new information on our labels, or even been to automate some of the or curation with the stored information.
+6. **Note: This part is still hypothetical and needs to be discussed** We will then add in addition to our `Scrap Program` a `Crawl Program`. This will call our [Brand API](https://github.com/Amechi101/unlabelapp) to use the `brand_name` key and crawl the web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our brand names or something else??? This is the data mining aspect, where we would later use the information to study trends, gather new information on our labels, or even begin to automate some of our curation to add labels to the app with this stored information about each label.
 
 **After thoughts & Notes..**
 
 We will still at the end of the day will have quality control on what brands are displayed on the app to our user. 
+
+The overall goal is to create a robust Search Engine of emerging & independent designers 
 
 To add or look at resources to scrap check the: [Admin](https://unlabel.us/unlabel-network/admin/applications/crawlresource/) to look at resources to scrap: [Resource API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/)
 
