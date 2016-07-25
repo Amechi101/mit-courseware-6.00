@@ -80,6 +80,7 @@ celerybeat-schedule
 
 # virtualenv
 unlabel-algorithm-env/
+unlabel_algorithm_env/
 
 # Spyder project settings
 .spyderproject
