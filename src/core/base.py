@@ -51,10 +51,11 @@ class ScrapBase( object ):
 		pass
 		
 	def scrapData( self ):
+		
+		if getattr(self, "url"):
+			data = self.setUrl( self.url ) 
 
-		data = self.setUrl( self.url ) 
-
-		#  object created to store information
+		# object to store information
 		page_info = {}
 
 		parent = None
@@ -63,17 +64,16 @@ class ScrapBase( object ):
 		
 		designer_names = None
 
-
-		if getattr(self, "name"):
-				
+		if getattr(self, "name"):	
 			page_info['resource_name'] = self.name
-		
+
 		if getattr(self, "parent"): 
 			
-			if self.boolean:
+			if getattr(self, "boolean"):
 				parent = data.find_all( id=[ "{0}".format( self.parent ) ] )  # finds all the divs that contain products
 			else:
 				parent = data.find_all( class_=[ "{0}".format( self.parent ) ] )  # finds all the divs that contain products
+		
 		else:
 			parent = data.find_all('div') # if the parent isn't defined, just find all the divs
 
@@ -132,7 +132,13 @@ class ScrapBase( object ):
 
 		
 
+# @TODO this is making it cleaner for step 4 of the program
+# 1. Store the objects in the method scrap data into an array 
 
+# 2. make sure to check if the object already exist by checking in self.name == "designer_name", if so just update the "designer_names" list
+# if not then add the new object
+
+# 3. Store #2 in a json folder called raw_designer_data.json..
 
 
 
