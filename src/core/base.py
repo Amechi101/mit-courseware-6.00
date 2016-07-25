@@ -8,36 +8,43 @@ import os
 
 path = os.path.abspath( os.path.join(os.pardir) )
 
-
 class ScrapBase( object ):
 
-	def __init__( self, mainUrl, name, *elements, **container):
+	def __init__( self ):
 		super(ScrapBase, self).__init__()
-		self.mainUrl = mainUrl
-		self.name = name.lower()
-		self.elements = elements
-		self.container = container
 
 	def __str__( self ):
-		return 'ScrapBase: {0}'.format( self.mainUrl )
+		return 'ScrapBase: {0}'.format( self )
+
+	def setUrl( self, url ):
+		if url is not None:
+			self.url = url
+			return HTTPConnection().getSoup( self.url )
+		raise AttributeError( 'Url not added. Please add url' )
 	
 	def setName(self, name):
 		if name is not None:
-			self.name = name
+			self.name = name.lower()
 			return self.name
 		raise AttributeError( 'Resource name not added. Please add name!' )
-	
-	def setContainer(self, **container):
-		if container is not None:
-			self.container = container
-			return self.container
-		raise AttributeError( 'Container not added. Please add container!' )
 
-	def setElements(self, *elements):
-		if elements is not None:
-			self.elements = elements
-			return self.elements
-		raise AttributeError( 'Elements not added. Please add elements!' )
+	def cssClassOrId(self, boolean):
+		if boolean is not None:
+			self.boolean = boolean
+			return self.boolean
+		raise AttributeError( 'Not a boolean type.' )
+	
+	def setParent(self, parent):
+		if parent is not None:
+			self.parent = parent
+			return self.parent
+		raise AttributeError( 'Parent tag not added. Please add parent tag!' )
+
+	def setChildren(self, children):
+		if children is not None:
+			self.children = children
+			return self.children
+		raise AttributeError( 'Children of parent tag not added. Please add vaild html tag!' )
 
 	# If page has more than one page of designers
 	def getPages(self):
@@ -45,47 +52,88 @@ class ScrapBase( object ):
 		
 	def scrapData( self ):
 
-		data = HTTPConnection().getSoup( self.mainUrl )
+		data = self.setUrl( self.url ) 
 
-		html_container = None
-
-		if self.container:
-			html_container = data.find_all( **self.container )  # finds all the divs that contain products
-		else:
-			html_container = data.find_all('div') # if the container isn't defined, just find all the divs
-
-		html_container = [x for x in html_container if x is not None] # makes sure we don't have any Nones in our array
-
-		html_container = html_container[0:1] # for testing, we only want one div
-
+		#  object created to store information
 		page_info = {}
+
+		parent = None
 		
-		for item in html_container:
+		child = None
+		
+		designer_names = None
 
-			if getattr(self, "name"):
-				page_info['resource_name'] = self.name
+
+		if getattr(self, "name"):
+				
+			page_info['resource_name'] = self.name
+		
+		if getattr(self, "parent"): 
 			
-			if getattr(self, "elements"):
-				
-				elements = item.find_all( *self.elements )
+			if self.boolean:
+				parent = data.find_all( id=[ "{0}".format( self.parent ) ] )  # finds all the divs that contain products
+			else:
+				parent = data.find_all( class_=[ "{0}".format( self.parent ) ] )  # finds all the divs that contain products
+		else:
+			parent = data.find_all('div') # if the parent isn't defined, just find all the divs
 
-				designer_names = [text.get_text().encode('utf8') for text in elements if text != '\n\n']
+		parent = [x for x in parent if x is not None] # makes sure we don't have any Nones in our array
 
-				page_info['designer_names'] = designer_names
+		parent = parent[0:1] # for testing, we only want one div
 
-				page_info['designer_count'] = len(page_info['designer_names'])
+		for children in parent:
+			
+			if getattr(self, "children"):
+	
+				child = children.find_all( [ self.children ] )
+		
+				if not child:
+					raise Exception('List is Empty. Please make sure you have added correct child tag.')
+				else:
+					
+					designer_names = [ text.get_text(strip=True).encode('ascii', 'ignore') for text in child if text.get_text() ]
+					
+					if not designer_names:
+						raise Exception('List is Empty. Please make sure you have added correct child tag.')
+					else:
+						page_info['designer_names'] = list( set( designer_names ) )
+			
+						page_info['designer_count'] = len( page_info['designer_names'] )
 
-				
 		return page_info
-
 
 	def createJson(self):
 		data = self.scrapData()
 		try:
-			out = codecs.open(path + "/src/sites/output_data/" + self.name + ".json", 'w','utf8')
+			out = codecs.open(path + "/src/sites/output_data/" + self.name + ".json", 'w','ascii')
 
 			out.write( json.dumps( data ) )
 		except Exception, e:
 			raise e
+
+	def initialization(self):
+		
+		data = HTTPConnection().getResourceApi()
+	
+		for i, key in enumerate(data):
+			
+			if key is not None:
+				self.setUrl( key['resource_url'] )
+				
+				self.setName( key['resource_name'] )
+				
+				self.cssClassOrId( key['resource_parent_isCssOrId'] )
+				
+				self.setParent( key["resource_parent_name"] )
+				
+				self.setChildren( key["resource_children_tag"] )
+				
+				self.createJson()
+
+		
+
+
+
+
 
 

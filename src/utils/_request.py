@@ -46,7 +46,6 @@ class HTTPConnection( object ):
 			return response_content
 
 	def getSoup( self, url ):
-	
 		try:
 			soup = BeautifulSoup( str( self.getHttp( url ) ), 'lxml' )
 			
@@ -61,17 +60,18 @@ class HTTPConnection( object ):
 			return soup
 
 	def getBrandApi( self ):
-		json.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/') )
+		data = json.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/') )
 
-	
+		labels = data['labels']
+
+		return labels
+
 	def getResourceApi( self ):
-		getUrls = json.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/') )
+		data = json.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/') )
 	
-		resource_list = getUrls['resource_list']
-		
-		resource_urls = [ resource['resource_url'] for resource in resource_list ]
+		resource_list = data['resource_list']
 
-		return resource_urls
+		return resource_list
 
 
 
