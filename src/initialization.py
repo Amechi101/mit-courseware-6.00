@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from core.base import ScrapBase
-
+from utils._request import HTTPConnection
 import codecs
 import json
 import os
@@ -12,10 +12,29 @@ import os
 #########################################################################
 abspath = os.path.abspath( os.path.join(os.pardir) )
 
-# This runs and creates the json. 
+
+def unlabel_brand_names(file_name):
+
+	new_obj = {}
+	data = HTTPConnection().getBrandApi()
+
+	brand_names = [ name['brand_name'] for name in data  ]
+
+	new_obj['designer_names'] = brand_names
+
+	new_obj['resource_name'] = file_name
+
+	out = codecs.open(abspath + "/src/buckets/raw_data/" + "raw_data_" + file_name + ".json", 'w','ascii')
+
+	out.write( json.dumps( new_obj ) )
+
+
+
+# # This runs and creates the json. 
 if __name__ == "__main__":
 	ScrapBase().initialization()
-
+	unlabel_brand_names('unlabel')
+	
 	# scan the directory of json
 	json_directory = "{0}/src/buckets/raw_data".format(abspath)
 	json_files = [pos_json for pos_json in os.listdir(json_directory) if pos_json.endswith('.json')]
