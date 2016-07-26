@@ -16,6 +16,24 @@ class ScrapBase( object ):
 	def __str__( self ):
 		return 'ScrapBase: {0}'.format( self )
 
+	def initialization(self):
+		data = HTTPConnection().getResourceApi()
+	
+		for i, key in enumerate(data):
+			
+			if key is not None:
+				self.setUrl( key['resource_url'] )
+				
+				self.setName( key['resource_name'] )
+				
+				self.cssClassOrId( key['resource_parent_isCssOrId'] )
+				
+				self.setParent( key["resource_parent_name"] )
+				
+				self.setChildren( key["resource_children_tag"] )
+				
+				self.createJson()
+
 	def setUrl( self, url ):
 		if url is not None:
 			self.url = url
@@ -62,7 +80,9 @@ class ScrapBase( object ):
 		
 		child = None
 		
-		designer_names = None
+		scrapped_names = None
+
+		unlabel_brand_names = None
 
 		if getattr(self, "name"):	
 			page_info['resource_name'] = self.name
@@ -91,12 +111,15 @@ class ScrapBase( object ):
 					raise Exception('List is Empty. Please make sure you have added correct child tag.')
 				else:
 					
-					designer_names = [ text.get_text(strip=True).encode('ascii', 'ignore') for text in child if text.get_text() ]
+					scrapped_names = [ text.get_text(strip=True).encode('ascii', 'ignore') for text in child if text.get_text() ]
 					
-					if not designer_names:
+					if not scrapped_names:
 						raise Exception('List is Empty. Please make sure you have added correct child tag.')
 					else:
-						page_info['designer_names'] = list( set( designer_names ) )
+						
+						scrapped_names = list( set( scrapped_names ) )
+
+						page_info['designer_names'] = scrapped_names
 			
 						page_info['designer_count'] = len( page_info['designer_names'] )
 
@@ -104,42 +127,13 @@ class ScrapBase( object ):
 
 	def createJson(self):
 		data = self.scrapData()
+		
 		try:
-			out = codecs.open(path + "/src/sites/output_data/" + self.name + ".json", 'w','ascii')
+			out = codecs.open(path + "/src/buckets/raw_data/" + "raw_data_" + self.name + ".json", 'w','ascii')
 
 			out.write( json.dumps( data ) )
 		except Exception, e:
 			raise e
 
-	def initialization(self):
-		
-		data = HTTPConnection().getResourceApi()
-	
-		for i, key in enumerate(data):
-			
-			if key is not None:
-				self.setUrl( key['resource_url'] )
-				
-				self.setName( key['resource_name'] )
-				
-				self.cssClassOrId( key['resource_parent_isCssOrId'] )
-				
-				self.setParent( key["resource_parent_name"] )
-				
-				self.setChildren( key["resource_children_tag"] )
-				
-				self.createJson()
 
 		
-
-# @TODO this is making it cleaner for step 4 of the program
-# 1. Store the objects in the method scrap data into an array 
-
-# 2. make sure to check if the object already exist by checking in self.name == "designer_name", if so just update the "designer_names" list
-# if not then add the new object
-
-# 3. Store #2 in a json folder called raw_designer_data.json..
-
-
-
-
