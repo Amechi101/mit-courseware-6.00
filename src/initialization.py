@@ -5,6 +5,11 @@ import codecs
 import json
 import os
 
+######################################################################
+"""
+@TODO This needs to be optimized and cleaned up.
+"""
+#########################################################################
 abspath = os.path.abspath( os.path.join(os.pardir) )
 
 # This runs and creates the json. 
@@ -18,13 +23,13 @@ if __name__ == "__main__":
 	# load all the objects within a new list
 	all_data = []
 
-	# get all the json information within the directory and appened the objects to a new list
+	# get all the json information within the directory and append the objects to a new list
 	for js in json_files:
 		with codecs.open(os.path.join(json_directory, js),'r') as json_file:
 			all_data.append(json.load(json_file))
 
 
-	# create an empty dict to hosue the array of names and count of names
+	# create an empty dict to house the array of names and count of names
 	output_data = {}
 	
 	# create an empty lists to store all the 
