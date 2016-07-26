@@ -1,22 +1,33 @@
 #!/usr/bin/env python
-from utils._request import HTTPConnection
+from src.utils._request import HTTPConnection
 
+from src.settings import BASE_DIR
+
+from src.utils._debugger import debugger
+
+import os
 import codecs
 import json
 import time
-import os
+import simplejson
 
-path = os.path.abspath( os.path.join(os.pardir) )
-
-class ScrapBase( object ):
+class DesignerNamesScraper( object ):
+	"""
+	Program to scrap designer names from websites
+	"""
 
 	def __init__( self ):
-		super(ScrapBase, self).__init__()
+		super(DesignerNamesScraper, self).__init__()
 
 	def __str__( self ):
-		return 'ScrapBase: {0}'.format( self )
+		return 'DesignerNamesScraper: {0}'.format( self )
 
 	def initialization(self):
+		"""
+		Starts the scraper program
+		"""
+
+		# gets resources information from api about site
 		data = HTTPConnection().getResourceApi()
 	
 		for i, key in enumerate(data):
@@ -32,7 +43,9 @@ class ScrapBase( object ):
 				
 				self.setChildren( key["resource_children_tag"] )
 				
-				self.createJson()
+				self.createJsonFiles()
+
+				debugger(True, 'Scrapping resource {0}'.format(self.name))
 
 	def setUrl( self, url ):
 		if url is not None:
@@ -64,12 +77,15 @@ class ScrapBase( object ):
 			return self.children
 		raise AttributeError( 'Children of parent tag not added. Please add vaild html tag!' )
 
-	# If page has more than one page of designers
 	def getPages(self):
+		# @TODO function to help If page has more than one page of designers
+		# and needs to loop through
 		pass
 		
 	def scrapData( self ):
-		
+		"""
+		Algorithm to scrap names from the site
+		"""
 		if getattr(self, "url"):
 			data = self.setUrl( self.url ) 
 
@@ -125,13 +141,23 @@ class ScrapBase( object ):
 
 		return page_info
 
-	def createJson(self):
+	def createJsonFiles(self):
+		"""
+			Creates json files within the raw_data directory
+			These are buckets filled with designer names scrapped
+			from our resources
+		"""
 		data = self.scrapData()
 		
 		try:
-			out = codecs.open(path + "/src/buckets/raw_data/" + "raw_data_" + self.name + ".json", 'w','ascii')
+			# @TODO create a helper to check if the data is healthy before procceding to scrap
+			raw_data_directory = "{0}/src/buckets/raw_data/".format( BASE_DIR )
 
-			out.write( json.dumps( data ) )
+			raw_data_filenames = "raw_data_{0}.json".format( self.name )
+			
+			create_filenames = codecs.open(raw_data_directory + raw_data_filenames, 'w','ascii')
+
+			create_filenames.write( simplejson.dumps( data ) )
 		except Exception, e:
 			raise e
 

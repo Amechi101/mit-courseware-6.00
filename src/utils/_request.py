@@ -4,7 +4,7 @@ from requests.exceptions import ConnectionError
 
 import sys, os
 import requests
-import json
+import simplejson
 import time
 
 
@@ -60,14 +60,14 @@ class HTTPConnection( object ):
 			return soup
 
 	def getBrandApi( self ):
-		data = json.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/') )
+		data = simplejson.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/') )
 
 		labels = data['labels']
 
 		return labels
 
 	def getResourceApi( self ):
-		data = json.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/') )
+		data = simplejson.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/') )
 	
 		resource_list = data['resource_list']
 
