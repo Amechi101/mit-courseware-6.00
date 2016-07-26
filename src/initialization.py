@@ -33,7 +33,7 @@ def unlabel_brand_names(file_name):
 # # This runs and creates the json. 
 if __name__ == "__main__":
 	ScrapBase().initialization()
-	unlabel_brand_names('unlabel')
+	unlabel_brand_names('unlabel_api')
 	
 	# scan the directory of json
 	json_directory = "{0}/src/buckets/raw_data".format(abspath)
