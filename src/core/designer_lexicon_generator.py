@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from abstract_classes import AbstractScraper
+from abstract_classes import AbstractBase
 
 from src.utils._request import HTTPConnection
 
@@ -12,16 +12,16 @@ import codecs
 import time
 import simplejson
 
-class DesignerNamesScraper( AbstractScraper ):
+class DesignerLexiconGenerator( AbstractBase ):
 	"""
 	Scraps designer names from websites
 	"""
 
 	def __init__( self ):
-		super(DesignerNamesScraper, self).__init__()
+		super(DesignerLexiconGenerator, self).__init__()
 
 	def __str__( self ):
-		return 'Designer Names Scraper: {0}'.format( self )
+		return 'Designer Lexicon Generator: {0}'.format( self )
 
 	def initialization(self):
 		"""

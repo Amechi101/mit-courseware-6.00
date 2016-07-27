@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-from abstract_classes import AbstractScraperBase
-
-from designer_names_scraper import DesignerNamesScraper
+from abstract_classes import AbstractBase
 
 from src.settings import BASE_DIR, DATE_INFO
 
@@ -14,22 +12,22 @@ import simplejson
 import datetime
 import os
 
-class DesignerNamesSorting( AbstractScraperBase ):
+class DesignerLexiconCreator( AbstractBase ):
 	"""
-	Sorts designer names from websites & unlabel api into one file
+	Sorts designer names from websites & unlabel api into one file to create our lexicon
 	"""
 
 	def __init__(self):
-		super(DesignerNamesSorting, self).__init__()
+		super(DesignerLexiconCreator, self).__init__()
 
 	def __str__( self ):
-		return 'Designer Names Sorting: {0}'.format( self )
+		return 'Designer Lexicon Creator: {0}'.format( self )
 
 	def initialization(self):
 		self.createJson()
-		Debugger(True, 'Storing Data...').logger()
+		Debugger(True, 'Creating Lexicon...').logger()
 	
-	def scanJsonFiles(self):
+	def scanFolder(self):
 
 		UnlabelApiNames().createUnlabelApiJson()
 		
@@ -48,13 +46,9 @@ class DesignerNamesSorting( AbstractScraperBase ):
 
 		return raw_data
 
-	def getRawDataFromJson(self):
-		raw_data = self.scanJsonFiles()
-
-		return raw_data
-
-	def sortRawData(self):
-		raw_data = self.getRawDataFromJson()
+	def sortData(self):
+		# get buckets from scan the folder
+		raw_data = self.scanFolder()
 	
 		# create an empty dict to house the array of names and count of names
 		sorted_data = {}
@@ -79,17 +73,17 @@ class DesignerNamesSorting( AbstractScraperBase ):
 
 	def createJson(self):
 		"""
-		Stores sorted data in one json file
+		Stores sorted data in one json file to create our lexicon
 		"""
-		sorted_data = self.sortRawData()
+		lexicon = self.sortData()
 
-		sorted_data_directory = "{0}/src/buckets/sorted_data/".format( BASE_DIR )
+		lexicon_directory = "{0}/src/buckets/sorted_data/".format( BASE_DIR )
 
-		sorted_data_filename = "sorted_data_{0}.json".format( DATE_INFO )
+		lexicon_filename = "lexicon_{0}.json".format( DATE_INFO )
 		
 		# create new json with all the names filterd and sorted
-		out = codecs.open(sorted_data_directory + sorted_data_filename, 'w','ascii')
-		out.write( simplejson.dumps( sorted_data  ) )
+		out = codecs.open( lexicon_directory + lexicon_filename, 'w','ascii' )
+		out.write( simplejson.dumps( lexicon  ) )
 
 
 

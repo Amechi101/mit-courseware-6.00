@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-from src.core.designer_names_scraper import DesignerNamesScraper
-from src.core.designer_names_sorting import DesignerNamesSorting
+from src.core.designer_lexicon_generator import DesignerLexiconGenerator
+from src.core.designer_lexicon_creator import DesignerLexiconCreator
 
 if __name__ == "__main__":
 
-	DesignerNamesScraper().initialization()
-	DesignerNamesSorting().initialization()
+	DesignerLexiconGenerator().initialization()
+	DesignerLexiconCreator().initialization()
 		
-		
+				
+

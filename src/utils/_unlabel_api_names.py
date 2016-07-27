@@ -25,7 +25,7 @@ class UnlabelApiNames( object ):
 		# object to store unlabel api information
 		unlabel_api_obj = {}
 
-		raw_data_directory = "{0}/src/buckets/raw_data/".format(  BASE_DIR )
+		raw_data_directory = "{0}/src/buckets/raw_data/".format( BASE_DIR )
 		raw_data_filename = "raw_data_unlabel_api.json"
 
 		unlabel_api_brand_names = self.getUnlabelApiNames()
