@@ -1,9 +1,18 @@
 import sys
 import time
 
-def debugger(debugger, name):
 
-	if debugger:
-		sys.stdout.write(name + "\n" )
-		time.sleep(1.0)
-		sys.stdout.flush()
+class Debugger( object ):
+	
+	debugger_sleeper = 1.0
+
+	def __init__(self, debugger, name):
+		self.debugger = debugger
+		self.name = name
+
+	def logger(self):
+
+		if self.debugger:
+			sys.stdout.write(self.name + "\n" )
+			time.sleep( Debugger.debugger_sleeper )
+			sys.stdout.flush()

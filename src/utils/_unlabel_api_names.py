@@ -2,7 +2,7 @@
 from src.settings import BASE_DIR
 
 from _request import HTTPConnection
-from _debugger import debugger
+from _debugger import Debugger
 
 import os
 import codecs
@@ -38,7 +38,7 @@ class UnlabelApiNames( object ):
 
 		out.write( simplejson.dumps( unlabel_api_obj ) )
 
-		debugger(True, 'Creating Unlabel Json File')
+		Debugger(True, 'Creating Unlabel Json File').logger()
 	
 		
 

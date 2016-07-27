@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+from abstract_classes import AbstractScraperBase
+
 from designer_names_scraper import DesignerNamesScraper
 
-from src.settings import BASE_DIR
+from src.settings import BASE_DIR, DATE_INFO
 
-from src.utils._debugger import debugger
+from src.utils._debugger import Debugger
 from src.utils._request import HTTPConnection
 from src.utils._unlabel_api_names import UnlabelApiNames
 
@@ -12,17 +14,20 @@ import simplejson
 import datetime
 import os
 
-now = datetime.datetime.now()
-date_time_info = now.strftime("%Y_%m_%d")
+class DesignerNamesSorting( AbstractScraperBase ):
+	"""
+	Sorts designer names from websites & unlabel api into one file
+	"""
 
-class DesignerNamesSorting( object ):
 	def __init__(self):
 		super(DesignerNamesSorting, self).__init__()
 
+	def __str__( self ):
+		return 'Designer Names Sorting: {0}'.format( self )
 
 	def initialization(self):
-		self.storeSortedData()
-		debugger(True, 'Storing Data...')
+		self.createJson()
+		Debugger(True, 'Storing Data...').logger()
 	
 	def scanJsonFiles(self):
 
@@ -64,21 +69,23 @@ class DesignerNamesSorting( object ):
 		for key in raw_data:
 			list_of_all_resources_names.append( key['resource_name'] )
 			for scrapped_name in key['designer_names']:
-				list_of_all_designer_names.append( scrapped_name )
+				list_of_all_designer_names.append( scrapped_name.lower() )
 
 		sorted_data['list_of_all_resources_names'] = list_of_all_resources_names
-		sorted_data['list_of_all_designer_names'] = list(set(list_of_all_designer_names))	
+		sorted_data['list_of_all_designer_names'] = list( set( list_of_all_designer_names ) )	
 		sorted_data['total_count_of_all_designers'] = len( sorted_data['list_of_all_designer_names'] )
 
 		return sorted_data
 
-	def storeSortedData(self):
-
+	def createJson(self):
+		"""
+		Stores sorted data in one json file
+		"""
 		sorted_data = self.sortRawData()
 
 		sorted_data_directory = "{0}/src/buckets/sorted_data/".format( BASE_DIR )
 
-		sorted_data_filename = "sorted_data_{0}.json".format(date_time_info)
+		sorted_data_filename = "sorted_data_{0}.json".format( DATE_INFO )
 		
 		# create new json with all the names filterd and sorted
 		out = codecs.open(sorted_data_directory + sorted_data_filename, 'w','ascii')

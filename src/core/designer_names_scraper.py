@@ -1,26 +1,27 @@
 #!/usr/bin/env python
+from abstract_classes import AbstractScraper
+
 from src.utils._request import HTTPConnection
 
 from src.settings import BASE_DIR
 
-from src.utils._debugger import debugger
+from src.utils._debugger import Debugger
 
 import os
 import codecs
-import json
 import time
 import simplejson
 
-class DesignerNamesScraper( object ):
+class DesignerNamesScraper( AbstractScraper ):
 	"""
-	Program to scrap designer names from websites
+	Scraps designer names from websites
 	"""
 
 	def __init__( self ):
 		super(DesignerNamesScraper, self).__init__()
 
 	def __str__( self ):
-		return 'DesignerNamesScraper: {0}'.format( self )
+		return 'Designer Names Scraper: {0}'.format( self )
 
 	def initialization(self):
 		"""
@@ -34,18 +35,18 @@ class DesignerNamesScraper( object ):
 			
 			if key is not None:
 				self.setUrl( key['resource_url'] )
-				
-				self.setName( key['resource_name'] )
-				
-				self.cssClassOrId( key['resource_parent_isCssOrId'] )
-				
-				self.setParent( key["resource_parent_name"] )
-				
-				self.setChildren( key["resource_children_tag"] )
-				
-				self.createJsonFiles()
 
-				debugger(True, 'Scrapping resource {0}'.format(self.name))
+				self.setName( key['resource_name'] )
+
+				self.cssClassOrId( key['resource_parent_isCssOrId'] )
+
+				self.setParent( key["resource_parent_name"] )
+
+				self.setChildren( key["resource_children_tag"] )
+
+				self.createJson()
+
+				Debugger(True, 'Scrapping resource {0}'.format(self.name)).logger()
 
 	def setUrl( self, url ):
 		if url is not None:
@@ -117,14 +118,15 @@ class DesignerNamesScraper( object ):
 
 		parent = parent[0:1] # for testing, we only want one div
 
+		# @TODO increase targeting by running some analysis on the tags we get
 		for children in parent:
 			
 			if getattr(self, "children"):
 	
 				child = children.find_all( [ self.children ] )
-		
+
 				if not child:
-					raise Exception('List is Empty. Please make sure you have added correct child tag.')
+					raise Exception('No text is available or your list is empty.')
 				else:
 					
 					scrapped_names = [ text.get_text(strip=True).encode('ascii', 'ignore') for text in child if text.get_text() ]
@@ -141,7 +143,7 @@ class DesignerNamesScraper( object ):
 
 		return page_info
 
-	def createJsonFiles(self):
+	def createJson(self):
 		"""
 			Creates json files within the raw_data directory
 			These are buckets filled with designer names scrapped

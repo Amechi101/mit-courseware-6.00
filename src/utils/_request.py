@@ -67,7 +67,7 @@ class HTTPConnection( object ):
 		return labels
 
 	def getResourceApi( self ):
-		data = simplejson.loads( self.getHttp('https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/') )
+		data = simplejson.loads( self.getHttp('https://unlabel.us/resources-api/v1/resources/') )
 	
 		resource_list = data['resource_list']
 
