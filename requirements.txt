@@ -1,3 +1,13 @@
-requests==2.3.0
+PyMySQL==0.7.6
+SQLAlchemy==1.0.14
+aiohttp==0.22.4
 beautifulsoup4==4.5.0
+chardet==2.3.0
+chromedriver-installer==0.0.4
+cssselect==0.9.2
+lxml==3.6.1
+multidict==1.2.1
+psycopg2==2.6.2
+requests==2.3.0
+selenium==2.53.6
 simplejson==3.8.2

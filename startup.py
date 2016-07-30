@@ -1,11 +1,17 @@
-#!/usr/bin/env python
-from src.core.designer_lexicon_generator import DesignerLexiconGenerator
-from src.core.designer_lexicon_creator import DesignerLexiconCreator
+from src.config import unlabel_algorithm_main
+
+"""
+Enter in the function either:
+
+1. 'lexicon-creator' to start progrom to add to the lexicon from resources
+2. 'search-engine-crawl' to begin crawling the various search engines
+
+"""
 
 if __name__ == "__main__":
 
-	DesignerLexiconGenerator().initialization()
-	DesignerLexiconCreator().initialization()
-		
-				
+	unlabel_algorithm_main('lexicon-creato')
 
+
+			
+				
