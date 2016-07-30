@@ -120,6 +120,7 @@ images/
 nonpub_tests/
 
 results*
+designer_info.json
 
 # cache for GoogleScraper testings
 .scrapecache/
