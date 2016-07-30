@@ -87,3 +87,48 @@ unlabel_algorithm_env/
 
 # Rope project settings
 .ropeproject
+
+# test data
+tests/data/tmp/*
+
+google_scraper.db
+instructions/
+.ipynb_checkpoints
+google_scraper_results/
+
+
+# internal tests
+test_functionality/
+
+# all dirs that start with a point
+.*/
+
+*.db
+
+*.pyo
+
+h.py
+
+images/
+
+.ipynb_checkpoints
+
+# PyCharm editor
+.idea/
+
+# ignore tests
+nonpub_tests/
+
+results*
+
+# cache for GoogleScraper testings
+.scrapecache/
+
+# backup files
+.bak/
+
+# scraping keyword files
+kwfiles/
+
+# various virtual environments for testings
+ve32/
