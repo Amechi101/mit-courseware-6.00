@@ -115,13 +115,13 @@ class DesignerLexiconGenerator( AbstractBase ):
 		parent = [x for x in parent if x is not None] # makes sure we don't have any Nones in our array
 
 		parent = parent[0:1] # for testing, we only want one div
-
+		print(getattr(self, "parent"),parent)
 		# @TODO increase targeting by running some analysis on the tags we get, looking for keywords of categories
 		for children in parent:
 			
 			if getattr(self, "children"):
 	
-				child = children.find_all( [ self.children ] )
+				child = children.find_all( [{"class_":"brandLink_1rqlqhr"}, self.children ] )
 
 				if not child:
 					raise Exception('No text is available or your list is empty.')

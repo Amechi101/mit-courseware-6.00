@@ -20,12 +20,12 @@ def unlabel_algorithm_main( cmd ):
 		config = {
 		    'use_own_ip': True,
 		    'keywords': keywords,
-		    'search_engines': ['google','bing','yahoo'],
+		    'search_engines': ['google','bing','yahoo','duckduckgo'],
 		    'num_pages_for_keyword': 2,
 		    'scrape_method': 'selenium',
 	    	'sel_browser': 'chrome',
 		    'do_caching': True,
-		    'num_workers':15
+		    'num_workers':20
 		}
 
 		try:

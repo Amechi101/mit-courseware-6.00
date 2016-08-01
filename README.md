@@ -1,7 +1,7 @@
 # Unlabel Scrap & Crawl Program v2.0.0
 
 ### Problem:
-So right now our competitors all do something similar to us they try incorporating having different and many emerging/independent designers. Some are more broad in the designers they curate, others are more specific in their curation and in many cases resources contain the same designers as the other resources with just some slightly different products or how they position themselves in the market to sell to the users. But lets face it we all seem to be in the same vertical nonetheless. 
+So right now our competitors all do something similar to us they try incorporating having different and many emerging/independent designers, with seemingly great selection and quality. Some are more broad in the designers they curate, others are more specific in their curation and in many cases resources contain the same designers as other resources with just some slightly different products or how they position themselves in the market to sell to the users they seek. But lets face it we all seem to be in the same vertical nonetheless. 
 
 However, this creates some fragmentation within the web as you search for resources to find new designers, being that the ultimate goal is finding something new. The time and effort it takes is extremely time consuming when getting mixed search results surfing the web trying to find the best available resource to explore or sometimes not even knowing where to start your search in finding new designers or at this point on the frustration ladder anything new. 
 
@@ -12,27 +12,31 @@ This begs the questions:
 For Us:
 - **What is it that the user exactly wants?** 
 - **How can we help the user get exactly what they want?** 
+- **How can we help users filter and find something cool, unique [insert more buzz words here...] with limited effort?**
 
 For The User:
 - **Where do I even start my search?** 
-- **Who has the most organized and plentiful amount of data to extract what I need that is readable accessible, with limited effort to filter and find something cool, unique [insert more buzz words here...]?** 
+- **Who has the most organized and plentiful amount of data to extract what I need that is readable accessible?** 
+- **Why would I choose this resource to shop and discover new designers over the others?**
 - **Which data will I value the most?** 
 - **Can I depend on this resource to always show me what I want?**
 
 So the problem can be summed up as their is not one detailed resource that is cohesive enough to easily find emerging and independent designers for the fashion conscious user who may or may not be in the know.
 
+
 ### Current Solution:
-So currently our solution is finding and hand selecting designers from specific resources, adding them to an excel sheet to filter which ones we like or dont like and then eventually add to our Brand DB to expose them via a Brand API. 
+So currently our solution is finding and hand selecting designers from various resources, adding them to an excel sheet to filter which ones we like or dont like and then eventually add them to our Brand DB to expose them via a Brand API, to be consumed via (IOS, Web). 
 
 This fine and one of the more beautiful aspects of what we do, but it is far from an efficient means of continuing this course as we seek to become a powerful tool for users to search and find designers.
 
+**So what we need to do:**
+Make our backend robust enough to automate a better curation process so that users continuously get the best data possible at a high rate. This will help answer the questions (*For The User*)
+
 
 ### Proposed Enhanced Solution:
-So for us to curate better on the client facing side (IOS, Web) we need to make getting information on the backend more seamless and connected to Hook into our Brand DB.
 
-We need to make finding and curating these designers as efficient as possible, limit redundancy (meaning not include names we already have in our Brand DB) and increase the amount of data we can share with our users.
+Build a word bank(Lexicon) of designers from multiple resources (including our existing `Brand DB`) by hand selecting and adding the resources to our `Resource DB` and/or automating the process of looking for new resources via the web to further analyze so we can to scrap names to build our lexicon of designers to begin extracting and analyzing information about them to automate curation onto our app at a high level, without of course sacrificing quality . 
 
-The goal is making our backend robust enough to be able automating a better curation process so the users continuously get the best data possible at a high rate.
 
 ### The Scrap & Crawl Program
 
@@ -63,6 +67,8 @@ total_count_of_all_designers:Integer
 
 **Extra Notes**
 
+But what is the true difference between us and the other resources. We simlple just like you know the designers names upfront first, sort of like looking up a word in the dictionary but a more colorful one. The goal is to let users filter through categories/keywords and locations seamlessly so they can find new designers and really start to get in the know of some fresh new designers they may not have heard of. 
+
 We still at the end of the day will have quality control on what designers are displayed on the app to our user. We are just lazy and prefer 95% of it to be automated :)
 
 To add or look at resources to scrap check the: [Admin](https://unlabel.us/unlabel-network/admin/applications/crawlresource/)
@@ -71,7 +77,7 @@ To add or look at resources to scrap check the: [Admin](https://unlabel.us/unlab
 
 - How can we improve the Scrap & Crawl Program?
 
-- How can we hook the Unlabel Search Engine Crawler DB into our Brand DB programmtically to build a search engine on top of the Brand DB that will maximumly help our users filter our curated designers to find what their looking for?
+- How can we hook the Unlabel Search Engine Crawler DB into our Brand DB to build a search engine on top of the Brand DB that will maximumly help our users filter our curated designers to get what they want. This will help answer the questions (*For Us*)
 
 ### Programming Language 
 + Python
