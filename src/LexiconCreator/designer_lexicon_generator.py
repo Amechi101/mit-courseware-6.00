@@ -8,7 +8,6 @@ from src.LexiconCreator.utils._debugger import Debugger
 
 import os
 import codecs
-import time
 import simplejson
 
 class DesignerLexiconGenerator( AbstractBase ):
@@ -156,7 +155,7 @@ class DesignerLexiconGenerator( AbstractBase ):
 
 			raw_data_filenames = "raw_data_{0}.json".format( self.name )
 			
-			create_filenames = codecs.open(raw_data_directory + raw_data_filenames, 'w','ascii')
+			create_filenames = codecs.open(raw_data_directory + raw_data_filenames, 'w')
 
 			create_filenames.write( simplejson.dumps( data ) )
 		except:

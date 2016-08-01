@@ -1,75 +1,77 @@
-# Unlabel Scrap & Crawl Algorithm v1.0.0
+# Unlabel Scrap & Crawl Program v2.0.0
 
 ### Problem:
-So right now our competitors all do something similar to us they try and incorporate and have a resource of emerging designers. Some are more broad in the designers they curate, others are more specific in their curation, but the general notation is their and all seem to be in the same vertical.
+So right now our competitors all do something similar to us they try incorporating having different and many emerging/independent designers. Some are more broad in the designers they curate, others are more specific in their curation and in many cases resources contain the same designers as the other resources with just some slightly different products or how they position themselves in the market to sell to the users. But lets face it we all seem to be in the same vertical nonetheless. 
 
-However, this creates some fragmentation within the web and in searching for designers or resources to find designers. When searching the web it becomes a tedious and redundant task when after you query for a resource or particular designer you get mixed search results and are surfing the web to find the best resource to explore, while having to try and remember the resource/name or either bookmark the information. 
+However, this creates some fragmentation within the web as you search for resources to find new designers, being that the ultimate goal is finding something new. The time and effort it takes is extremely time consuming when getting mixed search results surfing the web trying to find the best available resource to explore or sometimes not even knowing where to start your search in finding new designers or at this point on the frustration ladder anything new. 
 
-So the problem can be summed up as their is no one detailed resource that is cohesive enough to find designers, but more specifically emerging and independent designers as they already hard to search and find.
+So typical the user just defaults to shopping on Zara, Asos, [Enter another mainstream fast fashion brand here..], its just so dam easy...we know...we do the same thing...
 
+This begs the questions:
 
-### What we do currently:
-So currently our solution is finding and hand selecting designers from specific resources, adding them to an excel sheet and then eventually our database to then show within our API. 
+For Us:
+- **What is it that the user exactly wants?** 
+- **How can we help the user get exactly what they want?** 
 
-This fine for now but far from an efficient means of continuing this course as we seek to become a powerful tool for users to search and find designers.
+For The User:
+- **Where do I even start my search?** 
+- **Who has the most organized and plentiful amount of data to extract what I need that is readable accessible, with limited effort to filter and find something cool, unique [insert more buzz words here...]?** 
+- **Which data will I value the most?** 
+- **Can I depend on this resource to always show me what I want?**
+
+So the problem can be summed up as their is not one detailed resource that is cohesive enough to easily find emerging and independent designers for the fashion conscious user who may or may not be in the know.
+
+### Current Solution:
+So currently our solution is finding and hand selecting designers from specific resources, adding them to an excel sheet to filter which ones we like or dont like and then eventually add to our Brand DB to expose them via a Brand API. 
+
+This fine and one of the more beautiful aspects of what we do, but it is far from an efficient means of continuing this course as we seek to become a powerful tool for users to search and find designers.
 
 
 ### Proposed Enhanced Solution:
-We need to make finding these designers as efficient as possible, limit redundancy (meaning not include names we already have in our database) and increase the amount of data we can share with our users, and make it useful for them to find these emerging and independent designers easier.
+So for us to curate better on the client facing side (IOS, Web) we need to make getting information on the backend more seamless and connected to Hook into our Brand DB.
 
-Above all break this fragmentation within the market and become the defacto resource of independent/emerging designers around the world. 
+We need to make finding and curating these designers as efficient as possible, limit redundancy (meaning not include names we already have in our Brand DB) and increase the amount of data we can share with our users.
 
-The curation part then comes when we add additional information about the designers once we have found them in the first place. 
+The goal is making our backend robust enough to be able automating a better curation process so the users continuously get the best data possible at a high rate.
 
+### The Scrap & Crawl Program
 
-**Here is the a proposed list of algorithm steps:**
+**Current Steps:**
 
+1. In the terminal enter `python startup.py` in the main directory after you have entered in the argument of the `unlabel_algorithm_main` function either 'lexicon-creator' starting the program (steps 2 - 4) to add to our lexicon by scraping names from various resources that we have added into our resources DB( exposed via our [Resources API](https://unlabel.us/resources-api/v1/resources/) ) and getting a copy of the latest labels we have added into our Brand DB( exposed via our [Brand API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/) ) or 'search-engine-crawl' to begin crawling and getting information via various search engines (Google, Yahoo, Bing, DuckDuckGo) entering names from our current lexicon as the query (see step 5). 
+
+2. The program after scrapping the site will create a json file with the `raw_data_name_of_the_resource.json` and add it within the `src/LexiconCreator/buckets/raw_data` directory. Within the file a object will be created to dump the data within. The object below: 
 ```python
-#ResourceName( url, name, *args, **kwargs ).createJson()
+{
+designer_names:["",""...],
+designer_count:Integer,
+resource_name:String
+}
+```
+3. Make a call the [Brand API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/) to create a json file `raw_data_unlabel_api.json` and add it too `src/LexiconCreator/buckets/raw_data` directory
 
-# url = url of resource to scrap from
-# name = name of resource begin scrapped
-# *args = list of elements to scrap
-# **kwargs = name of css `class` or `id` the *args will be filtered against (choose a **kwargs before looking for *args to filter)
-
-
-#Example:
-from core.base import ScrapBase
-
-class Garmentory( ScrapBase ):
-    """
-    In case you need to override or add any methods you can just do so within the newly Class,
-    as it inherits from the ScrapBase Class
-    
-    Remove the pass statement 
-    	...to add or alter any method below.
-    """
-	pass
-	
-Garmentory( "http://www.garmentory.com/designers", "Garmentory", [{"_class":"brand"}, 'a'], id=["brands-list"] ).createJson()
+4. Scan all of `src/LexiconCreator/buckets/raw_data` directory and get all the information from each json file and dump that data inside a new folder `src/LexiconCreator/buckets/sorted_data` creating a new json file `lexicon_year_month_day.json` with the object representation below with all the names, duplicates of names taken out and text formated. 
+```python
+{
+list_of_all_resources_names:["",""...],
+list_of_all_designer_names:["",""...],
+total_count_of_all_designers:Integer
+}
 ```
 
-1. Create a file `resource_name.py` within the src/sites directory and within the file create a new class the inherits from the `ScrapBase` Class. Name the class with the name of the Resource, call the class and add arguments within the call.
+5. We then use the `Search Engine Crawl Program` called [GoogleScraper](https://github.com/NikolaiT/GoogleScraper) originally created by [NikolaiT](https://github.com/NikolaiT), but has been added to out program suite to be modified and do our biding the way we need. This program takes the `list_of_all_designer_names` list within the `src/LexiconCreator/buckets/sorted_data` and programmatically inputs all the names within multiple browser sessions and crawls each search engine we add within the `config.py` collecting links, small excerpts and other data and stores the information in the [Unlabel Search Engine Crawler DB](https://www.adminium.io/dashboard). 
 
-2. To scrap an individual site run `python resource_name.py` in the terminal within the `src/sites` directory. To scrap all sites within the directory run the command `sh sites.sh` in the terminal. Either command will start the program to scrap each site and retrieve the names of designers. 
+**Extra Notes**
 
+We still at the end of the day will have quality control on what designers are displayed on the app to our user. We are just lazy and prefer 95% of it to be automated :)
 
-3. The algorithm after scrapping the site will create a `json file` and add it within the `src/sites/output_data` directory. Within the file an object will be created to dump the data within. The object will have `name (key) ==> list_of_names (value)`, `count (key) ==> total_number_of_designers_scraped (value), resource_name (key) ==> name_of_resource used (value)`. 
+To add or look at resources to scrap check the: [Admin](https://unlabel.us/unlabel-network/admin/applications/crawlresource/)
 
-4. Scan all of `output_data` folder and get all the information from the `resource_names.json` files and create a new `object` with a `list_of_all_resources_names `, `list_of_all_designer_names` and a `total_count_of_all_designers` within the `list_of_all_designer_names`. When getting `list_of_all_designer_names` run check to see if the names are duplicate before adding to `list_of_all_designer_names` If the name does exist it will not add to the list, if the name does not exist it will add the new name to the list. Create a new `all_designers.json` file.
+**Questions**
 
-5. Call the [Brand API](https://github.com/Amechi101/unlabelapp) to compare the names in the `all_designers.json` file to check what names are already exist within our API. If the name doesn't exist add the name into a temporary list. After the check is complete. Dumb the list into the DB to create a new records of `brand_names`. 
+- How can we improve the Scrap & Crawl Program?
 
-6. **Note: This part is still hypothetical and needs to be discussed** We will then add in addition to our `Scrap Program` a `Crawl Program`. This will call our [Brand API](https://github.com/Amechi101/unlabelapp) to use the `brand_name` key and crawl the web to find the relevant information correlated to the `brand_name` and begin to store that information in a separate DB/Server. It will either crawl (a search engine like e.g. Google,Yahoo or something else???) to query their search boxes with our brand names or something else??? This is the data mining aspect, where we would later use the information to study trends, gather new information on our labels, or even begin to automate some of our curation to add labels to the app with this stored information about each label.
-
-**After thoughts & Notes..**
-
-We will still at the end of the day will have quality control on what brands are displayed on the app to our user. 
-
-The overall goal is to create a robust Search Engine of emerging & independent designers 
-
-To add or look at resources to scrap check the: [Admin](https://unlabel.us/unlabel-network/admin/applications/crawlresource/) to look at resources to scrap: [Resource API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/resources/)
-
+- How can we hook the Unlabel Search Engine Crawler DB into our Brand DB programmtically to build a search engine on top of the Brand DB that will maximumly help our users filter our curated designers to find what their looking for?
 
 ### Programming Language 
 + Python

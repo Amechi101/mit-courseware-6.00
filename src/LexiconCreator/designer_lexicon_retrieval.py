@@ -7,7 +7,6 @@ from src.LexiconCreator.utils._debugger import Debugger
 
 import codecs
 import simplejson
-import datetime
 import os
 
 

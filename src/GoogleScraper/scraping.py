@@ -5,11 +5,15 @@ import random
 import time
 import os
 import abc
+import codecs
+import simplejson
 
 from src.GoogleScraper.proxies import Proxy
 from src.GoogleScraper.database import db_Proxy
 from src.GoogleScraper.output_converter import store_serp_result
 from src.GoogleScraper.parsing import get_parser_by_search_engine, parse_serp
+
+from src.LexiconCreator.settings import BASE_DIR, DATE_INFO
 import logging
 
 logger = logging.getLogger(__name__)
@@ -359,8 +363,8 @@ class SearchEngineScrape(metaclass=abc.ABCMeta):
         self.search_number += 1
 
         if not self.store():
-            logger.debug('No results to store for keyword: "{}" in search engine: {}'.format(self.query,
-                                                                                    self.search_engine_name))
+            
+            logger.debug('No results to store for keyword: "{}" in search engine: {}'.format(self.query, self.search_engine_name))
 
         if self.progress_queue:
             self.progress_queue.put(1)

@@ -29,7 +29,6 @@ scraper_searches_serps = Table('scraper_searches_serps', Base.metadata,
                                Column('scraper_search_id', Integer, ForeignKey('scraper_search.id')),
                                Column('serp_id', Integer, ForeignKey('serp.id')))
 
-
 class ScraperSearch(Base):
     __tablename__ = 'scraper_search'
 
@@ -59,7 +58,7 @@ class ScraperSearch(Base):
 class SearchEngineResultsPage(Base):
     __tablename__ = 'serp'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     status = Column(String, default='successful')
     search_engine_name = Column(String)
     scrape_method = Column(String)
@@ -194,7 +193,7 @@ class Proxy(Base):
     ip = Column(String)
     hostname = Column(String)
     port = Column(Integer)
-    proto = Column(Enum('socks5', 'socks4', 'http'))
+    proto = Column(Enum('socks5', 'socks4', 'http', name='proxy_types'))
     username = Column(String)
     password = Column(String)
 
@@ -256,9 +255,10 @@ def get_engine(config, path=None):
     Returns:
         The sqlalchemy engine.
     """
-    db_path = path if path else config.get('database_name', 'google_scraper') + '.db'
+    # db_path = path if path else config.get('database_name', 'google_scraper') + '.db'
     echo = config.get('log_sqlalchemy', False)
-    engine = create_engine('sqlite:///' + db_path, echo=echo, connect_args={'check_same_thread': False})
+    # engine = create_engine('sqlite:///' + db_path, echo=echo, connect_args={'check_same_thread': False})
+    engine = create_engine('postgres://u55cg0erk65tnp:pdm3n6rd8cg03ae1p1p4q5u80qu@ec2-52-207-77-4.compute-1.amazonaws.com:5432/dc854eid2j5crd', echo=echo)
     Base.metadata.create_all(engine)
 
     return engine

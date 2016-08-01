@@ -9,8 +9,8 @@ from src.LexiconCreator.utils._unlabel_api_names import UnlabelApiNames
 
 import codecs
 import simplejson
-import datetime
 import os
+import re
 
 class DesignerLexiconCreator( AbstractBase ):
 	"""
@@ -63,7 +63,14 @@ class DesignerLexiconCreator( AbstractBase ):
 		for key in raw_data:
 			list_of_all_resources_names.append( key['resource_name'] )
 			for scrapped_name in key['designer_names']:
-				list_of_all_designer_names.append( scrapped_name.lower() )
+			
+				scrapped_name = scrapped_name.replace('\\n', "").replace('\\r', "").replace('\\', "").lower()
+
+				scrapped_name = re.sub(r'(\\x[0-9A-Fa-f]+)', "", scrapped_name)
+				
+				clean_text = ' '.join(scrapped_name.split())
+				
+				list_of_all_designer_names.append( clean_text )
 
 		sorted_data['list_of_all_resources_names'] = list_of_all_resources_names
 		sorted_data['list_of_all_designer_names'] = list( set( list_of_all_designer_names ) )	
@@ -82,8 +89,8 @@ class DesignerLexiconCreator( AbstractBase ):
 		lexicon_filename = "lexicon_{0}.json".format( DATE_INFO )
 		
 		# create new json with all the names filterd and sorted
-		out = codecs.open( lexicon_directory + lexicon_filename, 'w','ascii' )
-		out.write( simplejson.dumps( lexicon  ) )
+		out = codecs.open( lexicon_directory + lexicon_filename, 'w' )
+		out.write( simplejson.dumps( lexicon ) )
 
 
 
