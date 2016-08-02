@@ -61,21 +61,23 @@ class DesignerLexiconCreator( AbstractBase ):
 
 		# find the keys within the list of objects
 		for key in raw_data:
-			list_of_all_resources_names.append( key['resource_name'] )
-			for scrapped_name in key['designer_names']:
 			
-				scrapped_name = scrapped_name.replace('\\n', "").replace('\\r', "").replace('\\', "").lower()
+			list_of_all_resources_names.append( key['resource_name'] )
+			
+			for scrapped_name in key['designer_names']:
+				
+				# replace('\\n', "").replace('\\r', "").replace('\\', "")
+				# clean_text = ' '.join(scrapped_name.split())
+				# scrapped_name = re.sub(r'(\\x[0-9A-Fa-f]+)', "", scrapped_name)
+				if scrapped_name != "":
+					scrapped_name = scrapped_name.lower()
 
-				scrapped_name = re.sub(r'(\\x[0-9A-Fa-f]+)', "", scrapped_name)
-				
-				clean_text = ' '.join(scrapped_name.split())
-				
-				list_of_all_designer_names.append( clean_text )
+					list_of_all_designer_names.append( scrapped_name )
 
 		sorted_data['list_of_all_resources_names'] = list_of_all_resources_names
-		sorted_data['list_of_all_designer_names'] = list( set( list_of_all_designer_names ) )	
+		sorted_data['list_of_all_designer_names'] = sorted( list( set( list_of_all_designer_names ) ) )
 		sorted_data['total_count_of_all_designers'] = len( sorted_data['list_of_all_designer_names'] )
-
+		
 		return sorted_data
 
 	def createJson(self):
@@ -86,7 +88,7 @@ class DesignerLexiconCreator( AbstractBase ):
 
 		lexicon_directory = "{0}/LexiconCreator/buckets/sorted_data/".format( BASE_DIR )
 
-		lexicon_filename = "lexicon_{0}.json".format( DATE_INFO )
+		lexicon_filename = "lexicon.json"
 		
 		# create new json with all the names filterd and sorted
 		out = codecs.open( lexicon_directory + lexicon_filename, 'w' )

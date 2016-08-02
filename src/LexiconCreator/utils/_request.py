@@ -47,7 +47,7 @@ class HTTPConnection( object ):
 
 	def getSoup( self, url ):
 		try:
-			soup = BeautifulSoup( str( self.getHttp( url ) ), 'lxml' )
+			soup = BeautifulSoup( self.getHttp( url ), 'lxml' )
 			
 			return soup
 		
@@ -55,7 +55,7 @@ class HTTPConnection( object ):
 
 			time.sleep(15)
 			
-			soup = BeautifulSoup( str( self.getHttp( url ) ), 'lxml' )
+			soup = BeautifulSoup( self.getHttp( url ), 'lxml' )
 			
 			return soup
 

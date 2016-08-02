@@ -10,7 +10,7 @@ def unlabel_algorithm_main( cmd ):
 	
 	if cmd == 'lexicon-creator':
 		DesignerLexiconGenerator().initialization()
-		DesignerLexiconCreator().initialization()
+		DesignerLexiconCreator().initialization() 
 	
 	elif cmd == 'search-engine-crawl':
 		

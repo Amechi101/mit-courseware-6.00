@@ -32,9 +32,12 @@ class DesignerLexiconGenerator( AbstractBase ):
 		for i, key in enumerate(data):
 			
 			if key is not None:
+				
 				self.setUrl( key['resource_url'] )
 
 				self.setName( key['resource_name'] )
+
+				Debugger(True, 'Scrapping resource {0}'.format(self.name)).logger()
 
 				self.cssClassOrId( key['resource_parent_isCssOrId'] )
 
@@ -44,7 +47,7 @@ class DesignerLexiconGenerator( AbstractBase ):
 
 				self.createJson()
 
-				Debugger(True, 'Scrapping resource {0}'.format(self.name)).logger()
+				Debugger(True, 'Finished scrapping resource {0}'.format(self.name)).logger()
 
 	def setUrl( self, url ):
 		if url is not None:
@@ -113,15 +116,14 @@ class DesignerLexiconGenerator( AbstractBase ):
 			parent = data.find_all('div') # if the parent isn't defined, just find all the divs
 
 		parent = [x for x in parent if x is not None] # makes sure we don't have any Nones in our array
-
 		parent = parent[0:1] # for testing, we only want one div
-		print(getattr(self, "parent"),parent)
+
 		# @TODO increase targeting by running some analysis on the tags we get, looking for keywords of categories
 		for children in parent:
 			
 			if getattr(self, "children"):
-	
-				child = children.find_all( [{"class_":"brandLink_1rqlqhr"}, self.children ] )
+				
+				child = children.find_all( [ self.children ] )
 
 				if not child:
 					raise Exception('No text is available or your list is empty.')
@@ -133,8 +135,6 @@ class DesignerLexiconGenerator( AbstractBase ):
 						raise Exception('{0} List is Empty. Please make sure you have added correct child tag.'.format(self.name))
 					else:
 						
-						scrapped_names = list( set( scrapped_names ) )
-
 						page_info['designer_names'] = scrapped_names
 			
 						page_info['designer_count'] = len( page_info['designer_names'] )

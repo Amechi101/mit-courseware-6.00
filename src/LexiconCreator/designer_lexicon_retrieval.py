@@ -26,7 +26,7 @@ class DesignerLexiconRetrival( AbstractBase ):
 	def getLexicon(self):
 		lexicon_directory = "{0}/LexiconCreator/buckets/sorted_data/".format( BASE_DIR )
 
-		lexicon_json_file = [json for json in os.listdir( lexicon_directory ) if json.endswith('{0}.json'.format(DATE_INFO))]
+		lexicon_json_file = [json for json in os.listdir( lexicon_directory ) if json.endswith('.json')]
 
 		lexicon = []
 

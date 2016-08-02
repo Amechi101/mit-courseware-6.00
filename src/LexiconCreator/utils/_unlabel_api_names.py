@@ -28,17 +28,18 @@ class UnlabelApiNames( object ):
 		raw_data_directory = "{0}/LexiconCreator/buckets/raw_data/".format( BASE_DIR )
 		raw_data_filename = "raw_data_unlabel_api.json"
 
+		Debugger(True, 'Creating Unlabel Json File').logger()
+
 		unlabel_api_brand_names = self.getUnlabelApiNames()
 
-		unlabel_api_obj['designer_names'] = list( set( unlabel_api_brand_names ) )
+		unlabel_api_obj['designer_names'] = unlabel_api_brand_names 
 		unlabel_api_obj['designer_count'] = len( unlabel_api_obj['designer_names'] )
 		unlabel_api_obj['resource_name'] = 'unlabel_api'
 
-		out = codecs.open(raw_data_directory + raw_data_filename, 'w','ascii')
+		out = codecs.open( raw_data_directory + raw_data_filename, 'w' )
 
 		out.write( simplejson.dumps( unlabel_api_obj ) )
 
-		Debugger(True, 'Creating Unlabel Json File').logger()
 	
 		
 
