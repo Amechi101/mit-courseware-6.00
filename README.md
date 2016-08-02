@@ -42,9 +42,9 @@ Build a word bank(Lexicon) of designers from multiple resources (including our e
 
 **Current Steps:**
 
-1. In the terminal enter `python startup.py` in the main directory after you have entered in the argument of the `unlabel_algorithm_main` function either 'lexicon-creator' starting the program (steps 2 - 4) to add to our lexicon by scraping names from various resources that we have added into our resources DB( exposed via our [Resources API](https://unlabel.us/resources-api/v1/resources/) ) and getting a copy of the latest labels we have added into our Brand DB( exposed via our [Brand API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/) ) or 'search-engine-crawl' to begin crawling and getting information via various search engines (Google, Yahoo, Bing, DuckDuckGo) entering names from our current lexicon as the query (see step 5). 
+(1) In the terminal enter `python startup.py` in the main directory after you have entered in the argument of the `unlabel_algorithm_main` function either 'lexicon-creator' starting the program (steps 2 - 4) to add to our lexicon by scraping names from various resources that we have added into our resources DB( exposed via our [Resources API](https://unlabel.us/resources-api/v1/resources/) ) and getting a copy of the latest labels we have added into our Brand DB( exposed via our [Brand API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/) ) or 'search-engine-crawl' to begin crawling and getting information via various search engines (Google, Yahoo, Bing, DuckDuckGo) entering names from our current lexicon as the query (see step 5). 
 
-2. The program after scrapping the site will create a json file with the `raw_data_name_of_the_resource.json` and add it within the `src/LexiconCreator/buckets/raw_data` directory. Within the file a object will be created to dump the data within. The object below: 
+(2) The program after scrapping the site will create a json file with the `raw_data_name_of_the_resource.json` and add it within the `src/LexiconCreator/buckets/raw_data` directory. Within the file a object will be created to dump the data within. The object below: 
 ```python
 {
 designer_names:["",""...],
@@ -52,9 +52,9 @@ designer_count:Integer,
 resource_name:String
 }
 ```
-3. Make a call the [Brand API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/) to create a json file `raw_data_unlabel_api.json` and add it too `src/LexiconCreator/buckets/raw_data` directory
+(3) Make a call the [Brand API](https://unlabel.us/unlabel-network/unlabel-network-api/v1/labels/) to create a json file `raw_data_unlabel_api.json` and add it too `src/LexiconCreator/buckets/raw_data` directory
 
-4. Scan all of `src/LexiconCreator/buckets/raw_data` directory and get all the information from each json file and dump that data inside a new folder `src/LexiconCreator/buckets/sorted_data` creating a new json file `lexicon_year_month_day.json` with the object representation below with all the names, duplicates of names taken out and text formated. 
+(4) Scan all of `src/LexiconCreator/buckets/raw_data` directory and get all the information from each json file and dump that data inside a new folder `src/LexiconCreator/buckets/sorted_data` creating a new json file `lexicon_year_month_day.json` with the object representation below with all the names, duplicates of names taken out and text formated. 
 ```python
 {
 list_of_all_resources_names:["",""...],
@@ -63,7 +63,7 @@ total_count_of_all_designers:Integer
 }
 ```
 
-5. We then use the `Search Engine Crawl Program` called [GoogleScraper](https://github.com/NikolaiT/GoogleScraper) originally created by [NikolaiT](https://github.com/NikolaiT), but has been added to out program suite to be modified and do our biding the way we need. This program takes the `list_of_all_designer_names` list within the `src/LexiconCreator/buckets/sorted_data` and programmatically inputs all the names within multiple browser sessions and crawls each search engine we add within the `config.py` collecting links, small excerpts and other data and stores the information in the [Unlabel Search Engine Crawler DB](https://www.adminium.io/dashboard). 
+(5) We then use the `Search Engine Crawl Program` called [GoogleScraper](https://github.com/NikolaiT/GoogleScraper) originally created by [NikolaiT](https://github.com/NikolaiT), but has been added to out program suite to be modified and do our biding the way we need. This program takes the `list_of_all_designer_names` list within the `src/LexiconCreator/buckets/sorted_data` and programmatically inputs all the names within multiple browser sessions and crawls each search engine we add within the `config.py` collecting links, small excerpts and other data and stores the information in the [Unlabel Search Engine Crawler DB](https://www.adminium.io/dashboard). 
 
 **Extra Notes**
 
